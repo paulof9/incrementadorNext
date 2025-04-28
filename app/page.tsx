@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { HistoricoItem } from '../../types/historicoItem';
+import { HistoricoItem } from '../types/HistoricoItem';
 // Componentes
 import Historico from '../app/components/historico'
 import Display from '../app/components/display'
