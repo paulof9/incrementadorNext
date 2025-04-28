@@ -1,103 +1,96 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState, useRef } from 'react';
+import { HistoricoItem } from '../../types/historicoItem';
+
+
+const Incrementador = () => {
+  const [contador, setContador] = useState(0);  // Inicializa o contador com 0
+  const [historico, setHistorico] = useState<HistoricoItem[]>([]);  // Inicializa o historico como um array de numeros
+  const nextId = useRef(0);
+
+  // Função de incrementar
+  const incrementarContador = () => {
+    setContador(contadorAnterior => contadorAnterior + 1);
+  };
+
+  // Função de diminuir
+  const diminuirContador = () => {
+    setContador(contadorAnterior => {
+      const novoContador = contadorAnterior - 1;
+      return novoContador < 0 ? 0 : novoContador;
+    });
+  };
+
+  // Função de resetar contador E adicionar ao histórico (array) ao resetar
+  const resetarContador = () => {
+    if (contador != 0) {
+      // Adiciona valor do 'contador' ao Array
+      setHistorico(historicoAnterior => [...historicoAnterior, { id: nextId.current++, valor: contador }]);
+    }
+    // Reseta contador
+    setContador(0);
+  };
+
+  // Função localStorage
+  
+
+  // Função de exclusão (idExclusão vem do id passado no HTML, em outras palavras, um 'x', variavel...)
+  const excluirHistorico = (idExclusao: number) => {
+    setHistorico(historicoAnterior => historicoAnterior.filter(item => item.id !== idExclusao));
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="row flex rounded-lg bg-slate-800 shadow-sm max-w-fit max-h-fit p-8 my-6 border border-slate-600 items-center">
+      {/* DISPLAY */}
+      <p className="rounded-md bg-white py-2 px-4 border border-transparent text-center text-sm text-black transition-all shadow-md hover:shadow-lg focus:bg-gray-100 focus:shadow-none active:bg-gray-100 hover:bg-gray-100 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2 flex-grow">
+        {contador}
+      </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      {/* Botão INCREMENTAR */}
+      <button
+        onClick={incrementarContador}
+        className="w-10 h-10 rounded-md bg-green-600 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2 flex items-center justify-center"
+      >
+        +1
+      </button>
+
+      {/* Botão DIMINUIR */}
+      <button
+        onClick={diminuirContador}
+        className="w-10 h-10 rounded-md bg-red-600 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-red-700 focus:shadow-none active:bg-red-700 hover:bg-red-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2 flex items-center justify-center"
+      >
+        -1
+      </button>
+      {/* Botão RESETAR */}
+      <button
+        onClick={resetarContador}
+        className="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+      >
+        resetar
+      </button>
+
+      {/* Histórico */}
+      <div className="w-24 h-fit rounded-md bg-white text-black border border-transparent text-center text-sm transition-all shadow-md disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2 flex flex-col items-center">
+        <p className="mb-1">Histórico:</p>
+        <ul className="px-2 max-h-28 overflow-y-auto text-xs">
+          {historico.map(item => (
+            <li key={item.id} className="flex items-center justify-between py-1">
+              <span className="mr-2">{item.valor}</span>
+              {/* Botão EXCLUIR */}
+              {/* Aqui passamos o id do item na função excluirHistorico */}
+              <button
+                onClick={() => excluirHistorico(item.id)}
+                className="rounded bg-red-600 px-1 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-red-700 focus:shadow-none active:bg-red-700 hover:bg-red-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              >
+                x
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
-}
+};
+
+export default Incrementador;
