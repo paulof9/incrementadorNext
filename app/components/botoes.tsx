@@ -1,4 +1,4 @@
-import { botoesProps } from '../../../types/botoesProps';
+import { botoesProps } from '../../types/botoesProps';
 
 const Incrementador = ({ incrementarContador, diminuirContador, resetarContador }: botoesProps) => {
     return(

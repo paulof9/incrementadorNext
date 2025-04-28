@@ -1,4 +1,4 @@
-import { displayProps } from '../../../types/displayProps';
+import { displayProps } from '../../types/displayProps';
 
 const ContadorDisplay = ({ contador }: displayProps) => {
   return (

@@ -1,4 +1,4 @@
-import { historicoProps } from '../../../types/historicoProps';
+import { historicoProps } from '../../types/historicoProps';
 
 const Historico = ({ historico, excluirHistorico }: historicoProps ) => {
     return(
